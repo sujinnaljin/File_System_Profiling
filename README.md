@@ -66,6 +66,14 @@ Nilfs2는 리눅스 상에서 구현된 Log Structured 파일 시스템이며 Ex
 ## 실행 방법
 1. 원래 커널 소스에 있는 linux/block/blk-core.c와 linux/fs/nilfs2/segbuf.c 우리가 작성한 blk-core.c와 segbuf.c파일로 대체 (modify로 수정 부분 검색 가능)
 2. 커널 컴파일 후 해당 커널로 부팅
+```
+uname -r //현재 커널 버전 확인
+vi /boot/grub/grub.cfg //여기서 menu_entry, sub_entry 중에 원하는 커널 버전 확인. menu_entry는 0, sub_entry는 1>0, 1>1, .. 1>n
+vi /etc/default/grub //GRUB-DEFUALT 값 확인 후 원하는 값으로 변경 ex GRUB-DEFUALT = "1>3"
+sudo update-grub
+reboot
+uname -r //부팅된 커널 버전 확인
+```
 3. Linux Kernel Module 작성 → basic.c 에 해당
 4. Makefile 작성. 이때 KDIR는 커널 소스 경로.
 5. make 명령어 실행 
