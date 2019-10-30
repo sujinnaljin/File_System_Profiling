@@ -54,10 +54,13 @@ Nilfs2는 리눅스 상에서 구현된 Log Structured 파일 시스템이며 Ex
 또한, Virtual File System에서 쓰기 파일에 대한 파일 시스템 명을 출력함으로써 VFS에서 사용되는 구조체에 대한 이해를 하는 데에 도움이 될 것이다.
 
 ## 결과
+
 **EXT4**
+
 ![ext4](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Result/ext4_plotting.png)
 
 **LILFS2**
+
 ![nilfs2](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Result/nilfs2_plotting.png)
 
 ## 실행 방법
