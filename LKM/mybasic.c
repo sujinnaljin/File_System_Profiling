@@ -40,11 +40,9 @@ static struct proc_dir_entry *proc_file;
 
 static ssize_t custom_write(struct file *file, const char __user *user_buffer, size_t count, loff_t *ppos) {
     //custom write 함수 구현부
-    
-    mm_segment_t old_fs = get_fs();
-    set_fs(KERNEL_DS);
-    printk(KERN_ALERT "write!\n");
-    
+       
+        printk(KERN_ALERT "write!\n");
+        
     while (jobQueue.size != 0) {
         Process popped = pq_pop(&jobQueue);
         int arrivalTime = popped.arrival_time;
@@ -53,12 +51,10 @@ static ssize_t custom_write(struct file *file, const char __user *user_buffer, s
             return 0;
         }
         printk(KERN_INFO ", %s, %lld, %lld\n", popped.system_type, popped.arrival_time, popped.sector);
-    }
     
-    
+}
     printk(KERN_ALERT "write complete.\n");
     
-    set_fs(old_fs);
     return count;
     
 }
@@ -87,3 +83,4 @@ MODULE_AUTHOR("Jin&Cho");
 MODULE_DESCRIPTION("System Programming");
 MODULE_LICENSE("GPL");
 MODULE_VERSION("NEW");
+
