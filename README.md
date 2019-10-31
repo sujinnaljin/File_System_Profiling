@@ -57,11 +57,11 @@ Nilfs2는 리눅스 상에서 구현된 Log Structured 파일 시스템이며 Ex
 
 **EXT4**
 
-![ext4](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Result/ext4_plotting.png)
+![ext4](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Data%20%26%20Preprocessing%20%26%20Plotting/ext4_plotting.png)
 
 **LILFS2**
 
-![nilfs2](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Result/nilfs2_plotting.png)
+![nilfs2](https://github.com/sujinnaljin/File_System_Profiling/blob/master/Data%20%26%20Preprocessing%20%26%20Plotting/nilfs2_plotting.png)
 
 ## 실행 방법
 1. 원래 커널 소스에 있는 linux/block/blk-core.c와 linux/fs/nilfs2/segbuf.c 우리가 작성한 blk-core.c와 segbuf.c파일로 대체 (modify로 수정 부분 검색 가능)
