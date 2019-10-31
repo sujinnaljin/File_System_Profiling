@@ -83,3 +83,69 @@ uname -r //부팅된 커널 버전 확인
 9.  cd /proc/myproc_dir/ 통해 경로 이동
 10. sudo bash -c 'echo  문자 > myproc_file' 명령어 수행
 11. dmesg를 통해 출력 결과 확인
+
+## 파일 설명
+
+**/KernelCode/blk-core.c**
+
+경로: home/nyam/linux(커널 소스파일 디렉토리)/block/blk-core.c 설명:
+
+- line 40에 시간을 받아오기 위해 <linux/time.h> 헤더를 포함시켰다.
+- line 52에 queue를 구현했다. 그리고 queue를 export해서 모듈에서 사용할 수 있게 하였다
+- line 2213- submit_bio 함수 안 time, sector번호, system이름을 받아 queue에 저장하였다.
+
+**/KernelCode/segbuf.c**
+
+경로: 커널 소스파일 디렉토리/fs/nilfs2/segbuf.c 설명: Nilfs2에서 submit_bio를 호출하는 함수는 nilfs_segbuf_submit_bio()로 segbuf.c 파일에 정의되어있다. 이 nilfs_segbuf_submit_bio() 함수에서 bi_bdev내의 super_block 구조체인 bd_super에 인자로 받은 segbuf (nilfs_segment_buffer 구조체)에 들어있는 super_bd(super_block구조체)를 넣어주었다.
+
+**/LKM/Makefile**
+
+경로: ~/모듈 소스 저장 디렉토리 설명: KDIR에 커널 소스 경로를 저장하여 mybasic.c를 컴파일 하는데 쓰인다.
+
+**/LKM/mybasic.c**
+
+경로: ~/모듈 소스 저장 디렉토리 설명: 모듈을 구현한 파일이다. 안에 custom_write이라는 함수를 구현하여 원하는 정보를 로그에 출력하게 하였다.
+
+**/LKM/mybasic.ko**
+
+경로: ~/모듈 소스 저장 디렉토리 설명: mybasic.c 와 Makefile로 컴파일한 모듈 파일
+
+**/Data & Preprocessing & Plotting/iozone_log_ext4.txt**
+
+ext4 디스크에서 수행했을 때 iozone 수행했을때 출력되는 로그 파일.
+
+**/Data & Preprocessing & Plotting/iozone_log_ext4.txt**
+
+iozone_log_ext4**.**txt에서 변환된 csv  파일. 시간에 대한 데이터의 표현에 한계가 있다.
+
+**/Data & Preprocessing & Plotting/iozone_log_ext4&nilfs2.txt**
+
+nilfs2 디스크에서 수행했을 때 iozone 수행했을때 출력되는 로그 파일. ext4와 혼재되어 있다.
+
+**/Data & Preprocessing & Plotting/iozone_log_ext4&nilfs2.csv**
+
+iozone_log_ext4**.**txt에서 변환된 csv  파일. 시간에 대한 데이터의 표현에 한계가 있다.
+
+**/Data & Preprocessing & Plotting/iozone_log_edited_nilfs2.txt**
+
+iozone_log_ext4&nilfs2.txt 파일에서 nilfs2만을 뽑아낸 로그 파일.
+
+**/Data & Preprocessing & Plotting/iozone_log_edited_nilfs2.csv**
+
+iozone_log_ext4&nilfs2.txt t에서 변환된 csv  파일. 시간에 대한 데이터의 표현에 한계가 있다.
+
+**/Data & Preprocessing & Plotting/log_preprocessing.ipynb**
+
+로그에 nilfs2와 ext4가 혼재되어 있을때, nilfs2에 해당하는 로그만 빼내기 위해서 preprocessing 하는 파일. iozone_log_ext4&nilfs2.txt 파일을 로드해 해당 결과를 iozone_log_edited_nilfs2.txt로 추출한다.
+
+**/Data & Preprocessing & Plotting/plotting_fs.ipynb**
+
+로그 파일 기반으로한 data를 plotting 하기 위한 파일.
+
+**/Data & Preprocessing & Plotting/ext4_plotting.png**
+
+ext4 로그에 대해 plotting 한 결과 파일.
+
+**/Data & Preprocessing & Plotting/nilfs2_plotting.png.png**
+
+nilfs2 로그에 대해 plotting 한 결과 파일.
