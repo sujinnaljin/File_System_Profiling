@@ -58,7 +58,6 @@ static ssize_t custom_write(struct file *file, const char __user *user_buffer, s
     
     printk(KERN_ALERT "write complete.\n");
     
-    //restore kernel memory setting
     set_fs(old_fs);
     return count;
     
