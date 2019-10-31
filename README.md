@@ -88,11 +88,11 @@ uname -r //부팅된 커널 버전 확인
 
 **/KernelCode/blk-core.c**
 
-경로: home/nyam/linux(커널 소스파일 디렉토리)/block/blk-core.c 설명:
+경로: 커널 소스파일 디렉토리/block/blk-core.c 설명:
 
-- line 40에 시간을 받아오기 위해 <linux/time.h> 헤더를 포함시켰다.
-- line 52에 queue를 구현했다. 그리고 queue를 export해서 모듈에서 사용할 수 있게 하였다
-- line 2213- submit_bio 함수 안 time, sector번호, system이름을 받아 queue에 저장하였다.
+- line 36 - 시간을 받아오기 위해 <linux/time.h> 헤더를 포함시켰다.
+- line 53 - queue를 구현했다. 그리고 queue를 export해서 모듈에서 사용할 수 있게 하였다
+- line 2214 - submit_bio 함수 안 time, sector번호, system이름을 받아 queue에 저장하였다.
 
 **/KernelCode/segbuf.c**
 
