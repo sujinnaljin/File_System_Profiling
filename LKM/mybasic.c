@@ -1,5 +1,5 @@
 //
-//  basic.c
+//  mybasic.c
 //  
 //
 //  Created by 강수진 on 2019/10/29.
@@ -50,6 +50,8 @@ static ssize_t custom_write(struct file *file, const char __user *user_buffer, s
             //다 뺐는데 읽으려고하면 return
             return 0;
         }
+
+// modified by sujin  2019.10.30
         printk(KERN_INFO ", %s, %lld, %lld\n", popped.system_type, popped.arrival_time, popped.sector);
     
 }

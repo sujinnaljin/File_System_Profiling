@@ -33,13 +33,14 @@
 #include <linux/ratelimit.h>
 #include <linux/pm_runtime.h>
 #include <linux/blk-cgroup.h>
+// ----- added by sujin 2019.10.29 -----//
+#include <linux/time.h>
+// ----- added sujin end-----//
 #define CREATE_TRACE_POINTS
 #include <trace/events/block.h>
+
 #include "blk.h"
 #include "blk-mq.h"
-//start modify
-#include <linux/time.h>
-//end modify
 
 EXPORT_TRACEPOINT_SYMBOL_GPL(block_bio_remap);
 EXPORT_TRACEPOINT_SYMBOL_GPL(block_rq_remap);
@@ -49,7 +50,7 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(block_unplug);
 
 DEFINE_IDA(blk_queue_ida);
 
-//start modify
+// ----- added by sujin 2019.10.29-----//
 struct timeval mytime;
 #define MAX_SIZE 2000
 
@@ -81,7 +82,6 @@ void my_swap(Process *a, Process *b) {
     *a = *b;
     *b = tmp;
 }
-
 
 Process pq_pop(priority_queue* q) {
     int my_current = 0;
@@ -132,7 +132,7 @@ int pq_push(priority_queue* q, Process value) {
         pq_pop(q);
         size--;
     }
-
+    
     int my_current = size; //현재 위치한 인덱스
     int parent = (size - 1) / 2; //완전 이진트리에서 parent 인덱스
     q -> heap[size] = value; //마지막 빈 자리에 value 할당
@@ -149,8 +149,7 @@ int pq_push(priority_queue* q, Process value) {
     return 1;
 }
 
-
-//end modify
+// ----- added sujin end-----//
 
 /*
  * For the allocated request tables
@@ -2206,23 +2205,21 @@ blk_qc_t submit_bio(int rw, struct bio *bio)
 	if (bio_has_data(bio)) {
 		unsigned int count;
 
-        if (unlikely(rw & REQ_WRITE_SAME))
-            count = bdev_logical_block_size(bio->bi_bdev) >> 9;
-        else
-            count = bio_sectors(bio);
-        
-        if (rw & WRITE) {
+		if (unlikely(rw & REQ_WRITE_SAME))
+			count = bdev_logical_block_size(bio->bi_bdev) >> 9;
+		else
+			count = bio_sectors(bio);
+
+		if (rw & WRITE) {
             count_vm_events(PGPGOUT, count);
             
-            //start modify
+            // ----- added by euncho 2019.10.28----//
             if(bio->bi_iter.bi_sector!=NULL) if(bio->bi_bdev != NULL) if(bio->bi_bdev->bd_super != NULL) if(bio->bi_bdev->bd_super->s_type != NULL) {
                 do_gettimeofday(&mytime);
-                Process temp = createProcess((unsigned long long)(mytime.tv_sec) * 1000000 + (unsigned long long)(mytime.tv_usec),
-                                             (unsigned long long) bio->bi_iter.bi_sector,
-                                             bio->bi_bdev->bd_super->s_type->name);
+                Process temp = createProcess((unsigned long long)(mytime.tv_sec) * 1000000 + (unsigned long long)(mytime.tv_usec), (unsigned long long) bio->bi_iter.bi_sector, bio->bi_bdev->bd_super->s_type->name);
                 pq_push(&jobQueue, temp);
             }
-            //end modify
+            // ----- added euncho end ----//
 
 		} else {
 			task_io_account_read(bio->bi_iter.bi_size);
